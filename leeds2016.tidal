@@ -3,10 +3,10 @@ anny: leeds 2016 live performance
 setlist:
   - piston vi
   - battery 2 (edit)
-  - piston v/raise
-  - new exclusive
+  - raise/piston v
+  - juliese [new]
   - something to say (version)
-  - piston iii/piston iv/battery 1
+  - batter 1/piston iii/piston iv
 -}
 
 {-
@@ -117,7 +117,9 @@ d'arpy $ cf $ b2'arpy
 
 d'arpy $ cf $ iter 9 $ b2'arpy
 
--- piston v/raise
+{-
+raise/piston v
+-}
 
 d'ql $ slow (10%4) $ spread density [1,5%4] $
   s "[qlatibro:1 qlatibro]*2"
@@ -192,11 +194,13 @@ d'qs silence
 d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
   every 4 (brak . density 2) $ s "k(3,8)"
 
--- borrowed from new exclusive
+-- borrowed from juliese
 d'udu $ ududu
 d'fly silence
 
--- new exclusive
+{-
+juliese [new]
+-}
 
 let hhb m = smash 16 [0.25, 0.5] $
             (if m then (every 3 (append $ s "rhh:1 rhh")) else id) $
@@ -311,7 +315,9 @@ d8 $ slow 16 . gap 64 $ s "pclow"
 
 mapM_ ($ silence) [d2,d5]
 
--- something to say (version)
+{-
+something to say (version)
+-}
 
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
@@ -416,9 +422,9 @@ d'voc $ cf $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
---d'bass $ every 2 (density 2) $ bass'5
-
--- piston iii/piston iv/battery 1
+{-
+battery 1/piston iii/piston iv
+-}
 
 d'misc $ bass2'3
 
