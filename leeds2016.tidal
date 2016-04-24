@@ -385,7 +385,7 @@ d'voc $ cf $ slow 2 $
   ss'chorus
   # vowel "e"
 
-d'perc silence
+msil [d'drum, d'perc]
 
 d'drum $ cf $
   every 2 (superimpose $ iter' 3) $
@@ -403,6 +403,8 @@ d'gt $ cf $
 
 d'kurt $ cf $ s "kurt"
   # n (slow 4 "5 6 4")
+
+d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
 
 d'moog $ cf $
   slow 8 . striate 8 $
@@ -425,11 +427,11 @@ d'voc $ cf $ slow 2 $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
-d'drum $ overlay (s "k") $ cf $
+d'drum $ overlay (morek $ s "k") $ cf $
   every 2 (superimpose $ iter' 3) $
   slow 2 $ ss'perc'
 
-d'drum $ overlay (s "k") $ cf $
+d'drum $ overlay (morek $ s "k") $ cf $
   every 2 (superimpose $ iter' 3) $
   slow 2 $ ss'perc
 
@@ -439,6 +441,10 @@ d'voc $ cf $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
+d'drum $ overlay (morek $ s "k") $ cf $
+  every 2 (superimpose $ iter' 3) $
+  slow 2 $ ss'perc
+
 d'voc $ cf $
   within (0.5, 0.75) rev $
   iter 3 . striate 4 $
@@ -446,15 +452,17 @@ d'voc $ cf $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
--- do more?
-{-
+-- this is new
 d'voc $ cf $
+  slowspread (\x -> within (0, 0.5) (x)) [id, const silence, (# speed "-1")] $
   within (0.5, 0.75) rev $
   iter 3 . striate 4 $
   ss'chorus
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
--}
+
+d'bass2 $ every' 4 4 (0.32 ~>) $ chop 16 $ s "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4"
+  # gain "0.9"
 
 {-
 battery 1/piston i/iii/iv
@@ -463,6 +471,12 @@ battery 1/piston i/iii/iv
 d'misc $ bass2'3
 
 msil [d'voc, d'moog]
+
+d'drum $ overlay (s "k") $ cf $
+  every 2 (superimpose $ iter' 3) $
+  slow 2 $ ss'perc
+
+msil [d'bass, d'bass2]
 
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1)
@@ -499,12 +513,10 @@ d'drum $ cf $
 d'bass2 $ bass'3 "o i" "1" True
 
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
-d'tac $ shard'3f
 
-msil [d'tac, d'hand, d'bz, d'bass]
-d'tac $ every 2 (density 2) $ bass'5
-
+msil [d'hand, d'bass]
 d'bass $ slow 16 $ bass' 64
+msil [d'tac, d'bz]
 
 d'drum $ cf $
   overlay (every 2 (density 3) $ s "~ rsn") $
@@ -514,11 +526,17 @@ d'drum $ cf $
   overlay (every' 8 8 (density 1.5) $ every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
 
+d'arpy $ shard'3f
+
 msil [d'drum, d'bass, d'tac, d'bass2]
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
   jux (0.25 <~) $ b1'perc
   # n (density 3 $ run 2)
+
+cps (130/60)
+cps (120/60)
+cps (100/60)
 
 hush
