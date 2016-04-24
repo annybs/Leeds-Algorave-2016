@@ -515,6 +515,7 @@ d'bass2 $ bass'3 "o i" "1" True
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
 
 msil [d'hand, d'bass]
+
 d'bass $ slow 16 $ bass' 64
 msil [d'tac, d'bz]
 
@@ -530,13 +531,14 @@ d'arpy $ shard'3f
 
 msil [d'drum, d'bass, d'tac, d'bass2]
 
+cps (135/60)
+cps (130/60)
+cps (125/60)
+d'arpy silence
+
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
   jux (0.25 <~) $ b1'perc
   # n (density 3 $ run 2)
-
-cps (130/60)
-cps (120/60)
-cps (100/60)
 
 hush
