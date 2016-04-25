@@ -329,8 +329,8 @@ something to say (version)
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
 
-msil [d'bass, d'gt]
 d'drum $ every' 32 32 (const silence) $ slow 2 $ ju'drum2
+msil [d'bass, d'gt]
 
 cps (102/60)
 cps (104/60)
@@ -451,24 +451,21 @@ d'drum $ overlay (morek $ s "k") $ cf $
   every 2 (superimpose $ iter' 3) $
   slow 2 $ ss'perc
 
-d'voc $ cf $
-  within (0.5, 0.75) rev $
-  iter 3 . striate 4 $
-  ss'chorus
-  # vowel "e"
-  # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
-
 -- this is new
 d'voc $ cf $
-  slowspread (\x -> within (0, 0.5) (x)) [id, const silence, (# speed "-1")] $
-  within (0.5, 0.75) rev $
-  iter 3 . striate 4 $
+  slowspread ($) [id, (within (0.25, 0.5) $ const silence), (# speed "-1")] $
+  iter 3 . striate 16 $
   ss'chorus
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
-d'bass2 $ every' 4 4 (0.32 ~>) $ chop 16 $ s "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4"
-  # gain "0.9"
+-- also this
+d'voc $ cf $
+  slowspread ($) [id, (within (0.25, 0.5) $ const silence), (# speed "-1")] $
+  iter 3 . striate 16 $
+  ss'chorus
+  # vowel "u e"
+  # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
 {-
 battery 1/piston i/iii/iv
@@ -482,7 +479,7 @@ d'drum $ overlay (s "k") $ cf $
   every 2 (superimpose $ iter' 3) $
   slow 2 $ ss'perc
 
-msil [d'bass, d'bass2]
+d'bass silence
 
 d'hand $ b1'hand
   # shape ((/2) <$> slow (10%4) sinewave1)
@@ -494,14 +491,6 @@ cps (130/60)
 cps (140/60)
 d'gt silence
 
-d'tac $ cf $ b1'tac
-d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
-
-d'perc $ cf $
-  spread slow [2,1] $
-  jux (0.25 <~) $ b1'perc
-  # n (density 3 $ run 2)
-
 d'bass $ cf $
   spread slow [1,3] $
   striate 16 $
@@ -509,6 +498,14 @@ d'bass $ cf $
   # n "0 1 0 0"
   # speed (halfosc1 <$> slow 8 sinewave1)
   # gain "0.9"
+
+d'perc $ cf $
+  spread slow [2,1] $
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'tac $ cf $ b1'tac
+d'tac $ cf . whenmod 7 4 (density 1.5) $ b1'tac
 
 d'drum silence
 
@@ -520,31 +517,37 @@ d'bass2 $ bass'3 "o i" "1" True
 
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
 
-msil [d'hand, d'bass]
-
-d'bass $ slow 16 $ bass' 64
+d'hand silence
 msil [d'tac, d'bz]
+
+d'bass2 $ overlay (slow 16 $ bass' 64) $
+  bass'3 "o i" "1" True
 
 d'drum $ cf $
   overlay (every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
+
+d'qs $ cf $ s "casio*2 ~"
+  # gain "0.85"
 
 d'drum $ cf $
   overlay (every' 8 8 (density 1.5) $ every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
 
 d'arpy $ shard'3f
-
-msil [d'drum, d'bass, d'tac, d'bass2]
+d'bass silence
 
 cps (135/60)
 cps (130/60)
 cps (125/60)
-d'arpy silence
+
+msil [d'drum, d'bass, d'tac, d'bass2, d'qs]
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
   jux (0.25 <~) $ b1'perc
   # n (density 3 $ run 2)
+
+d'arpy silence
 
 hush
