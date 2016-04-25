@@ -6,7 +6,7 @@ setlist:
   - raise/piston v
   - juliese [new]
   - something to say (version)
-  - batter 1/piston iii/piston iv
+  - battery 1 vs. piston
 -}
 
 {-
@@ -472,7 +472,7 @@ d'voc $ cf $
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
 {-
-battery 1/piston i/iii/iv
+battery 1 vs. piston
 -}
 
 d'misc $ bass2'3
@@ -544,7 +544,6 @@ d'drum $ cf $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
 
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
-
 d'arpy $ shard'3f
 
 cps (135/60)
