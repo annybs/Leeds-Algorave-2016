@@ -329,8 +329,9 @@ something to say (version)
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
 
+d'gt silence
 d'drum $ every' 32 32 (const silence) $ slow 2 $ ju'drum2
-msil [d'bass, d'gt]
+d'bass silence
 
 cps (102/60)
 cps (104/60)
@@ -408,9 +409,12 @@ d'gt $ cf $
   # speed "0.7"
 
 d'kurt $ cf $ s "kurt"
-  # n (slow 4 "5 6 4")
+  # n (slow 7 $ run 7)
 
 d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
+
+d'kurt $ cf $ s "kurt"
+  # n (slow 4 "5 6 4")
 
 d'moog $ cf $
   slow 8 . striate 8 $
@@ -419,8 +423,8 @@ d'moog $ cf $
   # speed "0.6 0.7"
   # pan (slow 8 sinewave)
 
-d'kurt $ cf $ s "kurt"
-  # n (slow 7 $ run 7)
+d'voc $ cf $ slow 4 $ ss'chorus
+  # vowel "e"
 
 d'voc $ cf $ slow 2 $
   iter 3 . striate 4 $
@@ -432,6 +436,8 @@ d'voc $ cf $ slow 2 $
   ss'chorus
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
+
+d'bass silence
 
 d'drum $ overlay (morek $ s "k") $ cf $
   every 2 (superimpose $ iter' 3) $
@@ -447,9 +453,7 @@ d'voc $ cf $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
-d'drum $ overlay (morek $ s "k") $ cf $
-  every 2 (superimpose $ iter' 3) $
-  slow 2 $ ss'perc
+d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
 
 -- this is new
 d'voc $ cf $
@@ -523,9 +527,14 @@ msil [d'tac, d'bz]
 d'bass2 $ overlay (slow 16 $ bass' 64) $
   bass'3 "o i" "1" True
 
+d'ant $ within (0.5, 1) (slow 1.5 . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
 d'drum $ cf $
   overlay (every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
+
+d'fly $ cf $ b2'trump "[~ tacscan ! !] ~"
+  # end "0.2"
 
 d'qs $ cf $ s "casio*2 ~"
   # gain "0.85"
@@ -534,20 +543,21 @@ d'drum $ cf $
   overlay (every' 8 8 (density 1.5) $ every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
 
+d'bz $ every 3 brak $ bzox'4 "~ bzl"
+
 d'arpy $ shard'3f
-d'bass silence
 
 cps (135/60)
 cps (130/60)
 cps (125/60)
 
-msil [d'drum, d'bass, d'tac, d'bass2, d'qs]
+msil [d'bass, d'tac, d'bass2, d'bz]
+msil [d'drum, d'ant]
+msil [d'fly, d'arpy]
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $
   jux (0.25 <~) $ b1'perc
   # n (density 3 $ run 2)
-
-d'arpy silence
 
 hush
