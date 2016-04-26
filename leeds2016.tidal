@@ -103,9 +103,11 @@ d'perc $ brak . iter 4 $
   # n "1 0 1 2"
   # shape "0.4 0.3 0.6"
 
--- quickly
-d'bass $ b2'bass
+d'bz $ 0.5 ~> bzox'4 "bz"
+d'bz $ 0.5 ~> bzox'4 "bz*2"
+
 d'tr silence
+d'bass $ b2'bass
 
 d'bass $ b2'bass
   # shape "0.3" -- increase 0->0.3
@@ -137,8 +139,8 @@ cps (120/60)
 cps (117/60)
 
 d'drum $ cf $ pn'hh
-d'bass silence
-d'perc $ perc'5
+msil [d'bz, d'bass]
+d'perc $ 0.75 ~> s "wtsn/8"
 
 d'mons $ cf $
   striate 4 $ slow 2 $ s "monsterb"
@@ -163,32 +165,32 @@ d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
 d'bass $ every 2 (density 2) $ bass'5
 
 d'qs $ cf $
-  spread density [1,2] $
+  jux (iter 8) $ pn'qs 2
+  # gain "0.95"
+
+d'qs $ cf $
   jux (iter 8) $ pn'qs 2
   # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
 
 d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
   s "k*2"
 
-d'qs $ cf $
-  spread density [1,1,2,0.5] $
-  jux (iter 8) $ pn'qs 2
-  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
-
-d'fly $ fly'5 True
-
 d'bass $ every 2 (density 2) $ whenmod 3 2 (density 1.6) $ bass'5
   # speed ((+0.75).(/2) <$> slow 1.3 sinewave1)
 
-msil [d'mons, d'drum]
+d'mons silence
+d'drum silence
 
-d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
-  s "k(3,8)"
-
+-- quickly
 d'qs $ cf $
   spread density [1,1,0.5,2] $
   jux (iter 8) $ pn'qs 2
   # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
+d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
+  s "k(3,8)"
 
 d'bass2 $ slow 8 $ s "jungbass jungbass:1"
   # pan (slow 2 sinewave1)
@@ -200,11 +202,30 @@ d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
 d'qs $ cf $
   spread density [1,1,0.5,2] $
   jux (iter 8) $ pn'qs 2
-  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
-  # vowel "a"
+  # speed ((+0.7).(/1.5) <$> slow 3.2 triwave1)
 
-msil [d'casio, d'perc, d'qs]
-d'fly silence
+msil [d'perc, d'qs]
+
+d'fly $ fly'5 True
+
+d'casio $ cf $
+  spread density [1,4%3] $ s "casio*2 ~"
+  # gain "0.85"
+
+d'casio $ cf $
+  jux (slow (4%3)) $
+  spread density [1,4%3] $ s "casio*2 ~"
+  # gain "0.85"
+
+d'casio silence
+
+d'arpy $ cf $
+  spread density [1,2] $
+  striate 4 $ slow 2 $ s "monsterb"
+  # gain "0.7"
+  # speed ((+0.6).(/2) <$> slow 4 sinewave1)
+
+msil [d'arpy, d'fly]
 
 {-
 juliese [new]
@@ -215,6 +236,8 @@ let hhb m = smash 16 [0.25, 0.5] $
             s "rhh rhh:2"
             # gain "0.6"
 
+d'bass $ every 2 (density 2) $ bass'5
+
 cps (111/60)
 cps (105/60)
 
@@ -224,9 +247,10 @@ msil [d'bass, d'perc, d'ql]
 cps (99/60)
 
 d'bass $ bassbass
-
+d'drum $ s "k"
 d'perc $ hhb False
 d'bass $ bassbass'
+d'drum $ morek $ s "k"
 d'perc $ whenmod 16 15 (density 3) $ hhb False
 d'bass2 silence
 
@@ -278,7 +302,7 @@ d'eg $ (0.18 <~) $ every 2 (const silence) $
   slowspread density [1, 2, 0.5, 2] $ eg
   # gain "0.8"
 
-d'drum $ overlay ((0.5 ~>) $ s "sn/2") $ every' 12 2 (density 3) $ morek $ s "k"
+d'drum $ overlay ((0.5 ~>) $ s "sn/2") $ morek $ every' 12 2 (density 3) $ s "k"
 
 d'pc $ pcbeep
 d'pc $ slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $ pcbeep
@@ -463,6 +487,8 @@ d'voc $ cf $
   # vowel "e"
   # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
 
+d'misc $ bass2'3
+
 -- also this
 d'voc $ cf $
   slowspread ($) [id, (within (0.25, 0.5) $ const silence), (# speed "-1")] $
@@ -474,8 +500,6 @@ d'voc $ cf $
 {-
 battery 1 vs. piston
 -}
-
-d'misc $ bass2'3
 
 msil [d'voc, d'moog]
 
@@ -493,7 +517,7 @@ cps (110/60)
 cps (120/60)
 cps (130/60)
 cps (140/60)
-d'gt silence
+msil [d'gt, d'kurt]
 
 d'bass $ cf $
   spread slow [1,3] $
@@ -536,23 +560,26 @@ d'drum $ cf $
 d'fly $ cf $ b2'trump "[~ tacscan ! !] ~"
   # end "0.2"
 
-d'qs $ cf $ s "casio*2 ~"
-  # gain "0.85"
-
 d'drum $ cf $
   overlay (every' 8 8 (density 1.5) $ every 2 (density 3) $ s "~ rsn") $
   every 4 (density 1.5) $ slow 2 $ s "k [~ k] ! ~"
 
 d'bz $ every 3 brak $ bzox'4 "~ bzl"
+
+d'qs $ cf $ s "casio*2 ~"
+  # gain "0.85"
+
+d'arpy $ (0.5 <~) $ ((1%16) <~) $ shard'2
 d'arpy $ shard'3f
+
+msil [d'bass, d'tac, d'bass2, d'bz]
 
 cps (135/60)
 cps (130/60)
 cps (125/60)
 
-msil [d'bass, d'tac, d'bass2, d'bz]
-msil [d'drum, d'ant]
 msil [d'fly, d'arpy]
+msil [d'drum, d'ant]
 
 d'perc $ cf $
   slow 2 . spread slow [2,4,2,3] $

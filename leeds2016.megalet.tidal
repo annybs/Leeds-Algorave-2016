@@ -349,12 +349,12 @@ let d'drum = d1
     d'pc = d7
     d'shard = d7
     d'arm = d8
-    d'casio = d8
     d'misc = d8
     d'pcl = d8
     d'ql = d8
     d'ant = d9
     d'baa = d9
+    d'casio = d9
     d'print = d9
     d'voc = d9
     d'wbass = d9
@@ -371,7 +371,7 @@ let pn'hh = s "[phh*8 [phh*4 ho]]/2"
 let hhb m = smash 16 [0.25, 0.5] $
             (if m then (every 3 (append $ s "rhh:1 rhh")) else id) $
             s "rhh rhh:2"
-            # gain "0.6"
+            # gain "0.65"
 
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
