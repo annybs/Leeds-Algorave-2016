@@ -62,13 +62,19 @@ cps (135/60)
 cps (130/60)
 cps (125/60)
 
-d'perc $ cf $ s "uxay*4"
-  # n "1 0 1 2"
+let b2'ux = s "uxay*4"
+            # n "1 0 1 2"
+
+let b2'ux2 i = (if i then brak . iter 4 else brak) $
+               b2'uxp $ s "uxay*4"
+               # n "1 0 1 2"
+               # shape "0.4 0.3 0.6"
+
+d'perc $ b2'ux
 
 msil [d'drum, d'fly, d'gnome, d'bass]
 
-d'perc $ cf $ s "uxay*4"
-  # n "1 0 1 2"
+d'perc $ b2'ux
   # speed "[0.7 1 1.2]/2"
 
 d'drum $ cf $ b2'psr
@@ -82,10 +88,7 @@ d'drum $ overlay (s "k") $
   cf $ every 3 (0.125 <~) $ b2'psrf
 
 -- this and next 3 parts real quick
-d'perc $ cf $ brak $
-  b2'uxp $ s "uxay*4"
-  # n "1 0 1 2"
-  # shape "0.4 0.3 0.6"
+d'perc $ cf $ b2'ux2 False
 
 d'drum $ cf $ -- overlay (s "peri") $
   every 3 (0.125 <~) $ b2'psrf
@@ -98,10 +101,7 @@ d'tr $ cf $ b2'trump "[~ trump ! !] ~"
 d'drum $ overlay (s "k") $
   cf $ every 3 (0.125 <~) $ b2'psrf
 
-d'perc $ brak . iter 4 $
-  b2'uxp $ s "uxay*4"
-  # n "1 0 1 2"
-  # shape "0.4 0.3 0.6"
+d'perc $ b2'ux2 True
 
 d'bz $ 0.5 ~> bzox'4 "bz"
 d'bz $ 0.5 ~> bzox'4 "bz*2"
