@@ -1,0 +1,290 @@
+{-
+anny: leeds 2016 live performance notes
+http://anny.audio
+https://bitbucket.org/anny-fm/
+-}
+
+--[1] @ 138bpm
+
+-- in
+d'bass $ bass'6
+d'bz $ bass2'6
+d'fly $ plode'6
+d'cymb $ cymb'6
+d'perc $ wt'2 # gain "0.85"
+d'bass silence
+
+-- drum
+d'drum $ overlay sn'6 $ drum'6 --main
+d'cymb $ density (5%4) $ whenmod 9 4 (density 1.5) $ cymb'6 --hat
+d'cymb $ (0.5 <~) $ cymb'2 "0.7" --for slow
+
+-- bass
+d'misc $ slow 16 $ bass' 64 --goodbass
+d'bass $ 0.6 ~> bass'4 --weirdbass
+
+-- other
+d'gnome $ wtsn'6
+
+-- slow
+msil [d'perc,d'gnome,d'misc]
+d'gnome $ gnome'6 5 -- then 3
+msil [d'drum,d'fly,d'bz,d'cymb]
+d'drum $ s "[[k k:1]*2 [sn k:1 ~ k] [~ k:1 k ~] [~ sn ~ k]]/8"
+d'fly $ fly'5 False
+
+-- out
+msil [d'perc,d'fly,d'bz]
+
+--[2] @ 125bpm
+
+msil [d'drum, d'fly, d'gnome, d'bass]
+
+-- uxay
+d'perc $ b2'ux
+  # speed "[0.7 1 1.2]/2"
+
+d'perc $ b2'ux2 False
+
+-- drum
+d'drum $ overlay k $
+  cf $ every 3 (0.125 <~) $ b2'psrf
+
+d'cymb silence
+
+-- trump
+d'tr $ cf $ b2'trump "[~ trump ! !] ~"
+  # speed (halfosc1 <$> slow 4 sinewave1)
+
+-- the really good bass
+d'bass $ b2'bass
+  # shape (halfosc <$> saw1)
+
+-- arpy out
+d'arpy $ cf $ iter 9 $ b2'arpy
+
+--[3] @ 117bpm
+
+d'ql $ slow (10%4) $ spread density [1,5%4] $
+  s "[qlatibro:1 qlatibro]*2"
+  # vowel "e"
+
+d'drum $ cf $ pn'hh
+msil [d'bz, d'bass]
+d'perc $ 0.75 ~> s "wtsn/8"
+
+d'casio $ cf $
+  jux (slow (4%3)) $
+  spread density [1,4%3] $ s "casio*2 ~"
+  # gain "0.85"
+
+d'mons $ cf $
+  spread density [1,2] $
+  striate 4 $ slow 2 $ s "monsterb"
+  # gain "0.7"
+  # speed ((+0.6).(/2) <$> slow 4 sinewave1)
+
+d'bass $ every 2 (density 2) $
+--  whenmod 3 2 (density 1.6) $
+  bass'5
+  # speed ((+0.75).(/2) <$> slow 1.3 sinewave1)
+
+-- ~, pbd*2, k*2, then
+d'drum $ cf $ overlay (pn'sn) $ overlay (pn'hh) $
+  every 4 (brak . density 2) $ s "k(3,8)"
+
+d'qs $ cf $
+--1  spread density [1,1,2,0.5] $
+--2  spread density [1,1,0.5,2] $
+  jux (iter 8) $ pn'qs 2
+  # speed ((+0.7).(/2) <$> slow 3.2 triwave1)
+  # gain "0.95"
+
+d'bass2 $ slow 8 $ s "jungbass jungbass:1"
+  # speed "1.2"
+
+-- shush, crasio, fly
+msil [d'perc, d'qs]
+d'fly $ fly'5 True
+
+-- monster & out
+msil [d'arpy, d'fly]
+
+--[4] @ 99bpm
+
+-- back to k*2, pull bass, switch
+d'bass $ every 2 (density 2) $ bass'5
+msil [d'bass, d'perc, d'ql]
+
+d'bass $
+  slowspread (\x -> within (0.5, 1) (x)) [id, slow 2 . brak] $ -- much later
+  whenmod 4 2 (density 3) $
+  whenmod 3 2 (slow 2) $
+  bassbass' -- née bassbass
+
+d'perc $
+--4  iter 4 $
+--3  (# pan (density 16 "0.25 0.75")) $
+--1  whenmod 16 15 (density 3) $
+  hhb False --2 -> True
+
+d'drum $ -- overlay ((1 ~>) $ s "cy/8") $
+  overlay ((0.5 ~>) $ s "rsn/2") $ morek $ s "k"
+
+d'drum $ overlay ((0.5 ~>) $ s "rsn/2") $ morek $ every' 12 2 (density 3) $ s "k"
+
+d'udu $
+--3  (every' 5 3 $ brak) $
+--1  (every' 3 2 . sometimesBy 0.5 $ density (4%3)) $
+--2  (whenmod 7 5 $ trunc (5%6)) $
+  ududu
+
+d'wbass $ -- (sometimesBy 0.6 $ superimpose (rev . slow (5%4))) $
+  every' 4 4 (0.32 ~>) $
+  chop 16 $
+--  s "[wb wb:1 ~ ~]/4"
+--  s "[wb [wb:1 wb:2] ~ ~]/4"
+--  s "[wb [wb:1 wb:2] ~ [wb:1 wb:2]]/4"
+  s "[wb [wb:1 wb:2] ~ [[wb:1 wb:1/2] wb:2]]/4"
+  # gain "0.9"
+  # speed "[1 1 2]/3"
+
+msil [d'perc, d'bass]
+
+d'eg $
+  (0.18 <~) $ every 2 (const silence) $
+  (# speed ((+0.8).(/2) <$> slow 4 saw1)) $
+  density 0.245 $
+  slowspread density [1, 2, 0.5, 2] $ eg
+  # gain "0.8"
+
+-- it's ok to just copy-paste this one
+d'pc $
+--2  slowspread ($) [rev, id, brak, (0.25 ~>), id] $
+--1  slowspread (\x -> within x (slow 1.5)) [(0.25, 0.5), (0.75, 1), (0.25, 0.75)] $
+  pcbeep
+
+d'gt $ -- density 0.98 $
+  gt
+  # gain "0.87"
+  # speed ((+1).(/4) <$> slow 1.95 sinewave1)
+
+msil [d'perc, d'eg, d'wbass]
+d'drum $ ju'drum2
+
+--[5] @ 106bpm
+
+d'gt silence
+d'drum $ every' 32 32 (const silence) $ slow 2 $ ju'drum2
+d'bass silence
+-- speed up
+d'perc $ cf $
+  every 2 (superimpose $ iter' 3) $
+  slow 2 $ ss'perc
+
+d'gt $
+  stut 2 0.8 0.5 $ -- new
+  cf $
+  slow 2 $ every 4 (density 2) $ every 2 (density 2) $
+--2  density 2 $ iter 2 $
+  ss'stab
+  # speed ((+0.7).(/2) <$> slow 5 sinewave1)
+
+d'kurt $ cf $ s "kurt"
+  # n (slow 7 $ run 7)
+--  # n (slow 4 "5 6 4") -- alt
+
+d'voc $ cf $ slow 4 $ ss'verse
+  # vowel "e"
+
+d'voc $ cf $ -- slow 4, slow 2 then no slow @ end
+  slowspread ($) [id, (within (0.25, 0.5) $ const silence), (# speed "-1")] $ -- @ end
+  iter 3 . striate 16 $ -- striate 4 until end
+  ss'chorus
+  # vowel "u e" -- e until end
+  # speed ((+0.5).(*1.2) <$> slow 5 sinewave1)
+
+-- breakdown
+msil [d'drum, d'perc]
+-- ss'perc'
+msil [d'gt, d'kurt, d'pc, d'voc]
+
+d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
+
+d'moog $ cf $
+  slow 8 . striate 8 $
+  0.25 <~ s "moog"
+  # n (slow 2 "0 1")
+  # speed "0.6 0.7"
+  # pan (slow 8 sinewave)
+
+-- kick in
+d'bass silence
+d'drum $ overlay (morek $ k) $
+  cf $
+  every 2 (superimpose $ iter' 3) $
+  slow 2 $ ss'perc'
+
+-- out
+d'misc $ bass2'3
+
+--[6] @ 140bpm
+
+msil [d'voc, d'moog]
+d'drum $ overlay k $
+  cf $
+  every 2 (superimpose $ iter' 3) $
+  slow 2 $ ss'perc'
+
+d'bass silence
+d'hand $ b1'hand
+  # shape ((/2) <$> slow (10%4) sinewave1)
+  # pan (halfosc <$> slow (8%3) sinewave1)
+
+-- speed up
+msil [d'gt, d'kurt]
+
+d'bass $ b1'bassf
+
+d'perc $ cf $
+  spread slow [2,1] $ -- during
+--  slow 2 . spread slow [2,4,2,3] $ -- @ end
+  jux (0.25 <~) $ b1'perc
+  # n (density 3 $ run 2)
+
+d'tac $ cf .
+  whenmod 7 4 (density 1.5) $
+  b1'tac
+
+d'drum $ cf $
+  overlay (--2 every' 8 8 (density 1.5) $
+           --1 every 2 (density 3) $
+           s "~ rsn") $
+  every 4 (density 1.5) $
+  slow 2 $ s "k [~ k] ! ~"
+
+d'bass2 $ --overlay (slow 16 $ bass' 64) $
+  bass'3 "o i" "1" True
+
+d'bz $ every 3 brak $ bzox'4 "~ bzl"
+
+msil [d'tac, d'bz]
+
+d'ant $ within (0.5, 1) (slow 1.5 . chop 4) $ whenmod 5 3 (rev . chop 8) $ snare43'1
+
+d'fly $ cf $ b2'trump "[~ tacscan ! !] ~"
+  # end "0.2"
+
+d'bz $ every 3 brak $ bzox'4 "~ bzl"
+
+d'qs $ cf $ s "casio*2 ~"
+  # gain "0.85"
+
+d'arpy $ shard'3f
+
+msil [d'bass, d'tac, d'bass2, d'bz]
+-- slow to 125
+msil [d'fly, d'arpy]
+-- out perc
+msil [d'drum, d'ant]
+hush
