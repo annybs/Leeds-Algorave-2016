@@ -375,3 +375,12 @@ let hhb m = smash 16 [0.25, 0.5] $
 
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
+
+-- should backport these two to battery123.tidal
+let b2'ux = cf $ s "uxay*4"
+            # n "1 0 1 2"
+
+let b2'ux2 i = (if i then brak . iter 4 else cf . brak) $
+               b2'uxp $ s "uxay*4"
+               # n "1 0 1 2"
+               # shape "0.4 0.3 0.6"
