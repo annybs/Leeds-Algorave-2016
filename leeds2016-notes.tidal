@@ -183,12 +183,13 @@ d'perc $ cf $
   slow 2 $ ss'perc
 
 d'gt $
-  stut 2 0.8 0.5 $ -- new
+--  stut 2 0.8 0.5 $ -- new
   cf $
-  slow 2 $ every 4 (density 2) $ every 2 (density 2) $
---2  density 2 $ iter 2 $
+--1  slow 2 $ every 4 (density 2) $ every 2 (density 2) $
+--3  density 2 $ iter 2 $
   ss'stab
-  # speed ((+0.7).(/2) <$> slow 5 sinewave1)
+  # speed "0.7"
+--2  # speed ((+0.7).(/2) <$> slow 5 sinewave1)
 
 d'kurt $ cf $ s "kurt"
   # n (slow 7 $ run 7)
@@ -206,7 +207,7 @@ d'voc $ cf $ -- slow 4, slow 2 then no slow @ end
 
 -- breakdown
 msil [d'drum, d'perc]
--- ss'perc'
+-- ss'perc' ON D'DRUM!!! (or fuck up perc later bud. your call)
 msil [d'gt, d'kurt, d'pc, d'voc]
 
 d'bass $ whenmod 4 2 (density 3) $ whenmod 3 2 (slow 2) $ bassbass'
