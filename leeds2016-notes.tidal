@@ -78,7 +78,7 @@ d'casio $ cf $
   spread density [1,4%3] $ s "casio*2 ~"
   # gain "0.85"
 
-d'mons $ cf $
+d'mons $ cf $ -- @ end, use d'arpy
   spread density [1,2] $
   striate 4 $ slow 2 $ s "monsterb"
   # gain "0.7"
@@ -129,9 +129,10 @@ d'perc $
   hhb False --2 -> True
 
 d'drum $ -- overlay ((1 ~>) $ s "cy/8") $
-  overlay ((0.5 ~>) $ s "rsn/2") $ morek $ s "k"
-
-d'drum $ overlay ((0.5 ~>) $ s "rsn/2") $ morek $ every' 12 2 (density 3) $ s "k"
+  overlay ((0.5 ~>) $ s "rsn/2") $
+  morek $
+  every' 12 2 (density 3) $
+  s "k"
 
 d'udu $
 --3  (every' 5 3 $ brak) $
