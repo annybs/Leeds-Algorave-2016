@@ -31,6 +31,12 @@ let msil = mapM_ ($ silence)
                  # gain "0.8"
     b2'uxp = (# gain "0.8") .
              (# speed "[0.7 1 1.2]/2")
+    b2'ux = cf $ s "uxay*4"
+            # n "1 0 1 2"
+    b2'ux2 i = (if i then brak . iter 4 else cf . brak) $
+               b2'uxp $ s "uxay*4"
+               # n "1 0 1 2"
+               # shape "0.4 0.3 0.6"
     b2'psr = s "psr*4 psr*2"
              # gain "0.6"
     b2'psrf = s "[[psr*4 psr*2] ! ! psr*8]/4"
@@ -376,16 +382,7 @@ let hhb m = smash 16 [0.25, 0.5] $
 let ss'perc = s "{[sbd ~ ~ sbd] msg, rhh*2}"
     ss'perc' = s "{[rm ~ ~ rm] msg, rhh*2}"
 
--- should backport these two to battery123.tidal
-let b2'ux = cf $ s "uxay*4"
-            # n "1 0 1 2"
-
-let b2'ux2 i = (if i then brak . iter 4 else cf . brak) $
-               b2'uxp $ s "uxay*4"
-               # n "1 0 1 2"
-               # shape "0.4 0.3 0.6"
-
--- don't backport, you normally build up to this, but lands outta nowhere in leeds
+-- another performance let to make it easier to drop in battery1 bass nr end
 let b1'bassf = cf $
                spread slow [1,3] $
                striate 16 $
